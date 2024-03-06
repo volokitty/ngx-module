@@ -37,7 +37,7 @@ ngx_http_decline_create_loc_conf(ngx_conf_t *cf)
 
   conf = ngx_pcalloc(cf->pool, sizeof(ngx_http_decline_loc_conf_t));
 
-  if (conf == NULL)
+  if (!conf)
   {
     return NGX_CONF_ERROR;
   }
@@ -69,7 +69,7 @@ ngx_http_decline_handler(ngx_http_request_t *req)
   ngx_http_decline_loc_conf_t *decline_loc_conf;
   decline_loc_conf = ngx_http_get_module_loc_conf(req, ngx_http_decline_module);
 
-  ngx_int_t status_code = get_status_code(decline_loc_conf->declined_params_obj, req->method_name, req->uri);
+  ngx_int_t status_code = get_status_code(decline_loc_conf->declined_params_obj, req);
 
   if (status_code == NGX_ERROR)
   {
